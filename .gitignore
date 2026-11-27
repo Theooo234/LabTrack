@@ -1,0 +1,8 @@
+# Base SQLite générée localement
+db/*.db
+db/*.db-journal
+db/*.db-wal
+db/*.db-shm
+
+.DS_Store
+node_modules/
