@@ -44,7 +44,9 @@ const ok = crypto.scryptSync(mdp, Buffer.from(sel, 'hex'), 64).toString('hex') =
 - `type_analyse.tolerance` est un pourcentage : conforme si `|mesurée − déclarée| / déclarée × 100 ≤ tolérance`.
 - SQLite n'active les clés étrangères que si chaque connexion exécute `PRAGMA foreign_keys = ON;` : le backend doit le faire à l'ouverture.
 
-## Écarts par rapport à l'UML
+## Passage de l'UML aux tables
 
-- `action` : ajout de `id_cible` (paramètre `idCible` de `journaliser()`), et de `ancienne_valeur` / `nouvelle_valeur` (demandés au brainstorming).
+Le schéma suit `docs/UML_LabTrack_final.mdj` : chaque classe devient une table, avec les mêmes attributs.
+
 - Les associations deviennent des clés étrangères : `echantillon.id_client`, `analyse.id_echantillon`, `analyse.id_type_analyse`, `analyse.id_utilisateur` (technicien, nullable), `validation.id_analyse`, `validation.id_utilisateur`, `action.id_utilisateur`, `action.id_type_action`, `action.id_entite`.
+- `action.id_cible` est l'id de l'objet concerné dans la table désignée par `id_entite` (ex. ANALYSE n°3). Ce n'est pas une clé étrangère, car la table cible varie : `journaliser()` doit vérifier que l'id existe.

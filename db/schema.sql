@@ -1,6 +1,6 @@
 -- =====================================================================
 -- LabTrack - Schéma de la base SQLite
--- Basé sur docs/UML_LabTrack_methodes.mdj
+-- Basé sur docs/UML_LabTrack_final.mdj
 --
 -- Usage :  sqlite3 db/labtrack.db < db/schema.sql
 -- Le script supprime puis recrée toutes les tables : il est rejouable.
@@ -139,10 +139,12 @@ CREATE TABLE entite (
     nom        VARCHAR(50) NOT NULL UNIQUE
 );
 
--- id_cible        : id de la ligne concernée dans la table "entite"
---                   (paramètre idCible de Action.journaliser())
--- ancienne_valeur / nouvelle_valeur : demandés au brainstorming
---                   ("qui, quoi, quand, ancienne et nouvelle valeur")
+-- id_cible : id de la ligne concernée dans la table désignée par id_entite
+--            (ex. id_entite = ANALYSE et id_cible = 3 -> l'analyse n°3).
+--            Pas de clé étrangère possible car la table cible varie :
+--            c'est Action.journaliser() qui garantit que l'id existe.
+-- Utilisé par journaliser(type, entite, id_cible, details)
+--         et getHistorique(entite, id_cible).
 CREATE TABLE action (
     id_action        INTEGER PRIMARY KEY AUTOINCREMENT,
     id_utilisateur   INTEGER      NOT NULL REFERENCES utilisateur (id_utilisateur) ON DELETE RESTRICT,
@@ -150,8 +152,6 @@ CREATE TABLE action (
     id_entite        INTEGER      NOT NULL REFERENCES entite (id_entite) ON DELETE RESTRICT,
     id_cible         INTEGER      NOT NULL,
     details_action   VARCHAR(255),
-    ancienne_valeur  VARCHAR(255),
-    nouvelle_valeur  VARCHAR(255),
     date_action      DATETIME     NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -164,7 +164,7 @@ CREATE INDEX idx_analyse_echantillon  ON analyse (id_echantillon);
 CREATE INDEX idx_analyse_type         ON analyse (id_type_analyse);
 CREATE INDEX idx_analyse_technicien   ON analyse (id_utilisateur, statut);  -- page "mes analyses à faire"
 CREATE INDEX idx_validation_analyse   ON validation (id_analyse);
-CREATE INDEX idx_action_cible         ON action (id_entite, id_cible);      -- getHistorique(entite, idCible)
+CREATE INDEX idx_action_cible         ON action (id_entite, id_cible);      -- getHistorique(entite, id_cible)
 CREATE INDEX idx_action_utilisateur   ON action (id_utilisateur);
 
 -- ---------------------------------------------------------------------

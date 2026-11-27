@@ -122,21 +122,20 @@ INSERT INTO validation (id_validation, id_analyse, id_utilisateur, decision, mot
 --   5 AFFECTATION, 6 SAISIE_RESULTAT, 7 VALIDATION, 8 REJET, 9 CONNEXION
 -- entite : 1 UTILISATEUR, 4 ECHANTILLON, 5 ANALYSE
 -- ---------------------------------------------------------------------
-INSERT INTO action (id_utilisateur, id_type_action, id_entite, id_cible,
-                    details_action, ancienne_valeur, nouvelle_valeur, date_action) VALUES
-    (1, 1, 4, 1, 'Réception de l''échantillon ECH-2026-001',            NULL,             'RECU',           '2026-11-02 09:15:00'),
-    (1, 1, 5, 1, 'Ajout analyse protéines (déclaré 80 g/100 g)',         NULL,             'A_FAIRE',        '2026-11-02 09:16:00'),
-    (1, 1, 5, 2, 'Ajout analyse glucides (déclaré 5 g/100 g)',           NULL,             'A_FAIRE',        '2026-11-02 09:16:30'),
-    (5, 5, 5, 1, 'Affectation à Lucas Durand',                           NULL,             '2',              '2026-11-03 08:30:00'),
-    (5, 5, 5, 2, 'Affectation à Lucas Durand',                           NULL,             '2',              '2026-11-03 08:30:30'),
-    (2, 4, 4, 1, 'Début des analyses',                                   'RECU',           'EN_ANALYSE',     '2026-11-04 09:30:00'),
-    (2, 6, 5, 1, 'Saisie du résultat protéines',                         NULL,             '62.0',           '2026-11-04 10:00:00'),
-    (2, 6, 5, 2, 'Saisie du résultat glucides',                          NULL,             '5.3',            '2026-11-04 11:30:00'),
-    (4, 7, 5, 1, 'Validation : produit non conforme',                    'RESULTAT_SAISI', 'VALIDEE',        '2026-11-05 09:00:00'),
-    (4, 7, 5, 2, 'Validation',                                           'RESULTAT_SAISI', 'VALIDEE',        '2026-11-05 09:05:00'),
-    (4, 4, 4, 1, 'Toutes les analyses sont validées',                    'EN_ANALYSE',     'TERMINE',        '2026-11-05 09:05:10'),
-    (3, 6, 5, 6, 'Saisie du résultat protéines',                         NULL,             '58.0',           '2026-11-18 16:20:00'),
-    (4, 8, 5, 6, 'Rejet : écart incohérent avec le lot précédent',       'RESULTAT_SAISI', 'REJETEE',        '2026-11-19 10:15:00'),
-    (5, 9, 1, 5, 'Connexion',                                            NULL,             NULL,             '2026-11-27 08:45:00');
+INSERT INTO action (id_utilisateur, id_type_action, id_entite, id_cible, details_action, date_action) VALUES
+    (1, 1, 4, 1, 'Réception de l''échantillon ECH-2026-001',                     '2026-11-02 09:15:00'),
+    (1, 1, 5, 1, 'Ajout analyse protéines (déclaré 80 g/100 g)',                  '2026-11-02 09:16:00'),
+    (1, 1, 5, 2, 'Ajout analyse glucides (déclaré 5 g/100 g)',                    '2026-11-02 09:16:30'),
+    (5, 5, 5, 1, 'Affectation à Lucas Durand',                                    '2026-11-03 08:30:00'),
+    (5, 5, 5, 2, 'Affectation à Lucas Durand',                                    '2026-11-03 08:30:30'),
+    (2, 4, 4, 1, 'Statut RECU -> EN_ANALYSE',                                     '2026-11-04 09:30:00'),
+    (2, 6, 5, 1, 'Résultat protéines saisi : 62 g/100 g',                         '2026-11-04 10:00:00'),
+    (2, 6, 5, 2, 'Résultat glucides saisi : 5.3 g/100 g',                         '2026-11-04 11:30:00'),
+    (4, 7, 5, 1, 'Analyse validée : produit non conforme',                        '2026-11-05 09:00:00'),
+    (4, 7, 5, 2, 'Analyse validée',                                               '2026-11-05 09:05:00'),
+    (4, 4, 4, 1, 'Statut EN_ANALYSE -> TERMINE (toutes les analyses validées)',  '2026-11-05 09:05:10'),
+    (3, 6, 5, 6, 'Résultat protéines saisi : 58 g/100 g',                         '2026-11-18 16:20:00'),
+    (4, 8, 5, 6, 'Analyse rejetée : écart incohérent avec le lot précédent',      '2026-11-19 10:15:00'),
+    (5, 9, 1, 5, 'Connexion',                                                     '2026-11-27 08:45:00');
 
 COMMIT;
